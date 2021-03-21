@@ -111,6 +111,11 @@ def main():
         for apt in the_brand.apartments
         if (apt.sqft >= 900) and (apt.floor == 1 or apt.floor == 6)
     ]
+    
+    # Ensure list_of_apartments is not null otherwise exit script
+    if not list_of_apartments:
+        raise SystemExit('There were no apartments that matched specified criteria.')
+    
     # Sort list by Square Footage
     list_of_apartments.sort(key=lambda i: i['Sq. Footage'], reverse=True)
 
