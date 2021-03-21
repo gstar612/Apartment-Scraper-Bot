@@ -1,2 +1,2 @@
 # Apartment-Scraper-Bot
-Bot that scraps apartment complex websites for desired units
+Purpose: To scrap the websites of specific apartment complexes and look for desired units that match my criteria. Finally, email findings to myself!
