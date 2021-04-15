@@ -11,6 +11,8 @@ import requests
 import json
 import os
 import socket
+
+from typing import Optional
 from functools import cached_property
 
 import yagmail
@@ -33,13 +35,13 @@ class Apartment:
 
 class HollySt:
     """Class representing the Holly St Complex"""
-    def __init__(self):
+    def __init__(self) -> None:
         self.url = os.environ['APT_HOLLYST_URL']
         self.ids = ['1024819', '1024820', '1024821', '1024822', '1024823', '1024824']
         self.apartments = [Apartment(apt) for apt in self.apartment_data]
 
     @cached_property
-    def apartment_data(self):
+    def apartment_data(self) -> Optional[list]:
         """Cached Property:
         Get call to the Holly St website and parse HTML response for relevant
         apartment data. Return list of apartments(dicts).
@@ -89,12 +91,12 @@ class HollySt:
 
 class Brand:
     """Class representing the Brand Apartments Complex"""
-    def __init__(self):
+    def __init__(self) -> None:
         self.url = os.environ['APT_BRAND_URL']
         self.apartments = [Apartment(apt) for apt in self.apartment_data]
 
     @cached_property
-    def apartment_data(self) -> list:
+    def apartment_data(self) -> Optional[list[dict]]:
         """Cached Property:
         Get call to the Brands website and parse HTML response for relevant
         apartment data. Return list of apartments(dicts).
@@ -142,7 +144,7 @@ def main():
     holly_st = HollySt()
 
     # Ensure apartment data is valid, otherwise send error alert email & exit
-    if not the_brand.apartments or not holly_st.apartments:
+    if not the_brand.apartments or not isinstance(holly_st.apartments, list):
         subject = 'Apartment Bot Alert ERROR!'
         body = (f'<h3 style="color:red;"><i>Attention Asshole!</i></h3>'
                 f'<p>There was an issue with the Apartment Bot Automation on {socket.gethostname()}.</p>'
